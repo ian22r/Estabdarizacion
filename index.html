@@ -1,0 +1,1253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.65">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    span.s1 {font: 12.0px 'Apple Color Emoji'}
+    span.s2 {font: 12.0px 'Zapf Dingbats'}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="es"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"/&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"/&gt;</p>
+<p class="p1">&lt;title&gt;RecipeStd — Sistema de Estandarización de Recetas&lt;/title&gt;</p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--bg: #0f1117;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--surface: #1a1d27;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--surface2: #22263a;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--border: #2e3248;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--accent: #6c63ff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--accent2: #ff6584;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--accent3: #43e97b;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--text: #e8eaf6;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--text2: #9095b0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--danger: #ff4d6d;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--warning: #ffd166;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--success: #06d6a0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--card-radius: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--font: 'Segoe UI', system-ui, sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>* { box-sizing: border-box; margin: 0; padding: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; left: 0; top: 0; bottom: 0; width: 230px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--surface); border-right: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; flex-direction: column; z-index: 100;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar-logo { padding: 22px 20px 16px; border-bottom: 1px solid var(--border); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar-logo h1 { font-size: 1.25rem; color: var(--accent); letter-spacing: -0.5px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar-logo span { font-size: 0.72rem; color: var(--text2); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar-nav { flex: 1; padding: 12px 0; overflow-y: auto; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-section { padding: 8px 20px 4px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text2); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-item {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 10px 20px; cursor: pointer; font-size: 0.88rem;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--text2); transition: all 0.15s; border-left: 3px solid transparent;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-item:hover { background: var(--surface2); color: var(--text); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-item.active { background: rgba(108,99,255,0.12); color: var(--accent); border-left-color: var(--accent); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.main { margin-left: 230px; min-height: 100vh; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topbar {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--surface); border-bottom: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 14px 28px; display: flex; align-items: center; justify-content: space-between;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: sticky; top: 0; z-index: 50;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topbar-title { font-size: 1.05rem; font-weight: 600; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.topbar-actions { display: flex; gap: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.content { padding: 28px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: inline-flex; align-items: center; gap: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 0.85rem; font-weight: 500; transition: all 0.15s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary { background: var(--accent); color: #fff; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-primary:hover { background: #5a52d5; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-secondary:hover { background: var(--border); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-danger { background: rgba(255,77,109,0.15); color: var(--danger); border: 1px solid rgba(255,77,109,0.3); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-danger:hover { background: rgba(255,77,109,0.25); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-sm { padding: 5px 10px; font-size: 0.78rem; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn svg { width: 15px; height: 15px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--card-radius); padding: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.card-title { font-size: 0.95rem; font-weight: 600; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-card {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--surface); border: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: var(--card-radius); padding: 18px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; flex-direction: column; gap: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-label { font-size: 0.75rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-value { font-size: 1.8rem; font-weight: 700; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-sub { font-size: 0.75rem; color: var(--text2); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.stat-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.table-wrap { overflow-x: auto; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>th { padding: 10px 14px; text-align: left; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text2); border-bottom: 1px solid var(--border); white-space: nowrap; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>td { padding: 11px 14px; border-bottom: 1px solid rgba(46,50,72,0.5); vertical-align: middle; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tr:hover td { background: rgba(255,255,255,0.02); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tr:last-child td { border-bottom: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 20px; font-size: 0.72rem; font-weight: 500; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.badge-purple { background: rgba(108,99,255,0.15); color: #a29bfe; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.badge-green { background: rgba(6,214,160,0.15); color: var(--success); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.badge-orange { background: rgba(255,209,102,0.15); color: var(--warning); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.badge-red { background: rgba(255,77,109,0.15); color: var(--danger); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.badge-blue { background: rgba(74,144,226,0.15); color: #74b9ff; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-bar {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--surface2); border: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px; padding: 8px 14px; width: 280px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-bar input { background: none; border: none; outline: none; color: var(--text); font-size: 0.88rem; flex: 1; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.search-bar svg { color: var(--text2); width: 16px; height: 16px; flex-shrink: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.modal-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; inset: 0; background: rgba(0,0,0,0.7);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>z-index: 200; padding: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.modal-overlay.hidden { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.modal {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--surface); border: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: var(--card-radius); width: 100%; max-width: 780px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>max-height: 90vh; overflow-y: auto;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.modal-header {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 20px 24px; border-bottom: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: space-between;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: sticky; top: 0; background: var(--surface); z-index: 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.modal-body { padding: 24px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.modal-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.form-group { display: flex; flex-direction: column; gap: 6px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.form-group.full { grid-column: 1/-1; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>label { font-size: 0.78rem; color: var(--text2); font-weight: 500; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>input, select, textarea {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--surface2); border: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px; padding: 9px 12px; color: var(--text);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 0.88rem; outline: none; font-family: var(--font); transition: border-color 0.15s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>input:focus, select:focus, textarea:focus { border-color: var(--accent); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>textarea { resize: vertical; min-height: 80px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>select option { background: var(--surface2); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ficha-header {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: linear-gradient(135deg, rgba(108,99,255,0.15), rgba(255,101,132,0.1));</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid var(--border); border-radius: var(--card-radius); padding: 24px; margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ficha-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 14px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ficha-meta-item { display: flex; flex-direction: column; gap: 2px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ficha-meta-item span:first-child { font-size: 0.7rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ficha-meta-item span:last-child { font-size: 1rem; font-weight: 600; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cost-highlight {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(6,214,160,0.1); border: 1px solid rgba(6,214,160,0.3);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 10px; padding: 16px 20px; display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cost-item { display: flex; flex-direction: column; gap: 2px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cost-item span:first-child { font-size: 0.7rem; color: var(--text2); text-transform: uppercase; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.cost-item span:last-child { font-size: 1.1rem; font-weight: 700; color: var(--success); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ing-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr auto; gap: 8px; align-items: center; margin-bottom: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ing-row input, .ing-row select { padding: 7px 10px; font-size: 0.82rem; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.progress-bar { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.progress-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tabs { display: flex; gap: 2px; background: var(--surface2); border-radius: 10px; padding: 3px; margin-bottom: 20px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tab { flex: 1; padding: 8px; text-align: center; border-radius: 8px; cursor: pointer; font-size: 0.85rem; color: var(--text2); transition: all 0.15s; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tab.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,0.3); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.page { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.page.active { display: block; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.empty-state { text-align: center; padding: 60px 20px; color: var(--text2); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.empty-state svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.4; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.divider { height: 1px; background: var(--border); margin: 20px 0; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.text-success { color: var(--success); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.text-warning { color: var(--warning); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.text-danger { color: var(--danger); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.text-muted { color: var(--text2); font-size: 0.82rem; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.flex { display: flex; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.gap-2 { gap: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.items-center { align-items: center; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.justify-between { justify-content: space-between; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mb-4 { margin-bottom: 16px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.mb-6 { margin-bottom: 24px; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.font-bold { font-weight: 700; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.text-sm { font-size: 0.82rem; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@media (max-width: 900px) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.sidebar { width: 60px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.sidebar-logo h1, .sidebar-logo span, .nav-section, .nav-item span { display: none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.nav-item { justify-content: center; padding: 12px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.main { margin-left: 60px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.stats-grid { grid-template-columns: repeat(2, 1fr); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@media print {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.sidebar, .topbar, .topbar-actions, .btn { display: none !important; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.main { margin-left: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.content { padding: 0; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body { background: white; color: black; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;aside class="sidebar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="sidebar-logo"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;<span class="s1">🍱</span> RecipeStd&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span&gt;Estandarización de Recetas&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;nav class="sidebar-nav"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-section"&gt;Principal&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-item active" id="nav-dashboard" onclick="navigate('dashboard', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;rect x="3" y="3" width="7" height="7"/&gt;&lt;rect x="14" y="3" width="7" height="7"/&gt;&lt;rect x="3" y="14" width="7" height="7"/&gt;&lt;rect x="14" y="14" width="7" height="7"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span&gt;Dashboard&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-item" id="nav-recetas" onclick="navigate('recetas', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/&gt;&lt;polyline points="14 2 14 8 20 8"/&gt;&lt;line x1="16" y1="13" x2="8" y2="13"/&gt;&lt;line x1="16" y1="17" x2="8" y2="17"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span&gt;Recetas&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-item" id="nav-ingredientes" onclick="navigate('ingredientes', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span&gt;Ingredientes&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-section"&gt;Herramientas&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-item" id="nav-costos" onclick="navigate('costos', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;line x1="12" y1="1" x2="12" y2="23"/&gt;&lt;path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span&gt;Análisis de Costos&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="nav-item" id="nav-fichas" onclick="navigate('fichas', this)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;path d="M9 11l3 3L22 4"/&gt;&lt;path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span&gt;Fichas Técnicas&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/nav&gt;</p>
+<p class="p1">&lt;/aside&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;main class="main"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="topbar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="topbar-title" id="topbar-title"&gt;Dashboard&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="topbar-actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="search-bar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;circle cx="11" cy="11" r="8"/&gt;&lt;line x1="21" y1="21" x2="16.65" y2="16.65"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="text" placeholder="Buscar receta…" oninput="globalSearch(this.value)"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-primary" onclick="openNewRecetaModal()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"&gt;&lt;line x1="12" y1="5" x2="12" y2="19"/&gt;&lt;line x1="5" y1="12" x2="19" y2="12"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>Nueva Receta</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="content"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- DASHBOARD --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="page active" id="page-dashboard"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="stats-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-icon" style="background:rgba(108,99,255,0.15)"&gt;<span class="s1">📋</span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-label"&gt;Total Recetas&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-value" id="stat-recetas" style="color:var(--accent)"&gt;0&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-sub"&gt;Estandarizadas&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-icon" style="background:rgba(6,214,160,0.15)"&gt;<span class="s1">🧂</span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-label"&gt;Ingredientes&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-value" id="stat-ingredientes" style="color:var(--success)"&gt;0&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-sub"&gt;En catálogo&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-icon" style="background:rgba(255,209,102,0.15)"&gt;<span class="s1">💰</span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-label"&gt;Costo Promedio&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-value" id="stat-costo-prom" style="color:var(--warning)"&gt;$0&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-sub"&gt;Por porción&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-icon" style="background:rgba(255,101,132,0.15)"&gt;<span class="s1">📈</span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-label"&gt;Margen Promedio&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-value" id="stat-margen" style="color:var(--accent2)"&gt;0%&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="stat-sub"&gt;Sobre costo&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="card-title"&gt;Recetas Recientes&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="btn btn-secondary btn-sm" onclick="navigate('recetas', document.getElementById('nav-recetas'))"&gt;Ver todas&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="table-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Receta&lt;/th&gt;&lt;th&gt;Categoría&lt;/th&gt;&lt;th&gt;Costo/Porción&lt;/th&gt;&lt;th&gt;Margen&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;tbody id="dash-recetas-tbody"&gt;&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;&lt;span class="card-title"&gt;Ingredientes más Costosos&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div id="top-ingredientes-list"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-header"&gt;&lt;span class="card-title"&gt;Distribución por Categoría&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="categoria-bars"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- RECETAS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="page" id="page-recetas"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="flex justify-between items-center mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;select id="filter-categoria" onchange="renderRecetasTable()" style="width:180px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value=""&gt;Todas las categorías&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;select id="filter-sort" onchange="renderRecetasTable()" style="width:160px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="nombre"&gt;Ordenar: Nombre&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="costo"&gt;Ordenar: Costo&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option value="margen"&gt;Ordenar: Margen&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-primary" onclick="openNewRecetaModal()"&gt;+ Nueva Receta&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="table-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;th&gt;Receta&lt;/th&gt;&lt;th&gt;Clasificación&lt;/th&gt;&lt;th&gt;Porciones&lt;/th&gt;&lt;th&gt;Ingredientes&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;th&gt;Costo Total&lt;/th&gt;&lt;th&gt;Costo/Porción&lt;/th&gt;&lt;th&gt;P. Venta Sug.&lt;/th&gt;&lt;th&gt;Margen&lt;/th&gt;&lt;th&gt;Acciones&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;tbody id="recetas-tbody"&gt;&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- INGREDIENTES --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="page" id="page-ingredientes"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="flex justify-between items-center mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;select id="filter-tipo-ing" onchange="renderIngredientesTable()" style="width:180px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;option value=""&gt;Todos los tipos&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-primary" onclick="openNewIngredienteModal()"&gt;+ Nuevo Ingrediente&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="table-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;th&gt;#&lt;/th&gt;&lt;th&gt;Descripción&lt;/th&gt;&lt;th&gt;Tipo&lt;/th&gt;&lt;th&gt;Unidad&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;th&gt;Precio/Unidad&lt;/th&gt;&lt;th&gt;Rendimiento&lt;/th&gt;&lt;th&gt;Presentación&lt;/th&gt;&lt;th&gt;Proveedor&lt;/th&gt;&lt;th&gt;Acciones&lt;/th&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;/tr&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/thead&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;tbody id="ingredientes-tbody"&gt;&lt;/tbody&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/table&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- COSTOS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="page" id="page-costos"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;&lt;span class="card-title"&gt;Simulador de Precio de Venta&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Seleccionar Receta&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;select id="sim-receta" onchange="simularPrecio()"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option value=""&gt;-- Elige una receta --&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Margen de Utilidad (%)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="number" id="sim-margen" value="300" min="1" oninput="simularPrecio()"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Imprevistos (%)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="number" id="sim-imprevistos" value="10" min="0" oninput="simularPrecio()"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div id="sim-resultado" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="divider"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="cost-highlight"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="cost-item"&gt;&lt;span&gt;Costo MP/Porción&lt;/span&gt;&lt;span id="sim-costo-mp"&gt;$0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="cost-item"&gt;&lt;span&gt;+ Imprevistos&lt;/span&gt;&lt;span id="sim-costo-imp"&gt;$0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="cost-item"&gt;&lt;span&gt;Costo Real&lt;/span&gt;&lt;span id="sim-costo-real"&gt;$0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;div class="cost-item"&gt;&lt;span&gt;Precio Venta Sug.&lt;/span&gt;&lt;span id="sim-precio-venta" style="font-size:1.4rem"&gt;$0&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="card-header"&gt;&lt;span class="card-title"&gt;Ranking de Costos&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div id="ranking-costos"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="card-header"&gt;&lt;span class="card-title"&gt;Promedio de Costo por Categoría&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="comparativa-categorias"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- FICHAS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="page" id="page-fichas"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="flex gap-2 mb-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;select id="ficha-select" onchange="renderFicha()" style="flex:1;max-width:400px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;option value=""&gt;-- Seleccionar Receta --&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-secondary" onclick="window.print()"&gt;<span class="s1">🖨</span> Imprimir&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="ficha-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="empty-state"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"&gt;&lt;path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/&gt;&lt;polyline points="14 2 14 8 20 8"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;p&gt;Selecciona una receta para ver su ficha técnica&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MODAL RECETA --&gt;</p>
+<p class="p1">&lt;div class="modal-overlay hidden" id="modal-receta"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span style="font-weight:600;font-size:1rem" id="modal-receta-title"&gt;Nueva Receta&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-secondary btn-sm" onclick="closeModal('modal-receta')"&gt;<span class="s2">✕</span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="tabs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tab active" onclick="switchTab(0)"&gt;Información General&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tab" onclick="switchTab(1)"&gt;Ingredientes&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tab" onclick="switchTab(2)"&gt;Procedimiento&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="tab-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Nombre de la Receta *&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="text" id="r-nombre" placeholder="Ej: Rollo California"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Clasificación *&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;select id="r-clasificacion"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option&gt;Rollos&lt;/option&gt;&lt;option&gt;Salsas y Aderezos&lt;/option&gt;&lt;option&gt;Arroces&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option&gt;Fondos y Bases&lt;/option&gt;&lt;option&gt;Postres&lt;/option&gt;&lt;option&gt;Bebidas&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">              </span>&lt;option&gt;Platos Fuertes&lt;/option&gt;&lt;option&gt;Kushiage&lt;/option&gt;&lt;option&gt;Sopas&lt;/option&gt;&lt;option&gt;Otro&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Número de Porciones&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="number" id="r-porciones" value="1" min="1"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Peso de Salida (kg)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="number" id="r-peso" step="0.001" placeholder="0.000"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Imprevistos (%)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="number" id="r-imprevistos" value="10" min="0" max="100"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Margen de Venta (%)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="number" id="r-margen-venta" value="300" min="1"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Elaborado por&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="text" id="r-elaborado" placeholder="Nombre del chef"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;label&gt;Última Revisión&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="date" id="r-revision"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="tab-1" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;gap:8px;margin-bottom:8px;padding:0 2px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-muted"&gt;Ingrediente&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-muted"&gt;Cantidad&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-muted"&gt;Unidad&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-muted"&gt;Merma %&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="text-muted"&gt;Costo&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div id="ingredientes-list"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-secondary btn-sm" onclick="addIngredienteRow(null)" style="margin-top:10px"&gt;+ Agregar Ingrediente&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="divider"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="cost-highlight"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="cost-item"&gt;&lt;span&gt;Costo Total MP&lt;/span&gt;&lt;span id="modal-costo-total" style="color:var(--success)"&gt;$0.00&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="cost-item"&gt;&lt;span&gt;Costo/Porción&lt;/span&gt;&lt;span id="modal-costo-porcion" style="color:var(--success)"&gt;$0.00&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="cost-item"&gt;&lt;span&gt;Precio Venta Sug.&lt;/span&gt;&lt;span id="modal-precio-venta" style="color:var(--warning)"&gt;$0.00&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="tab-2" style="display:none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Procedimiento de Elaboración&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;textarea id="r-procedimiento" rows="8" placeholder="Describe paso a paso el procedimiento…"&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Notas Adicionales&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;textarea id="r-notas" rows="4" placeholder="Alérgenos, variaciones, sustituciones…"&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-secondary" onclick="closeModal('modal-receta')"&gt;Cancelar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-primary" onclick="saveReceta()"&gt;Guardar Receta&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MODAL INGREDIENTE --&gt;</p>
+<p class="p1">&lt;div class="modal-overlay hidden" id="modal-ingrediente"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal" style="max-width:560px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span style="font-weight:600;font-size:1rem" id="modal-ing-title"&gt;Nuevo Ingrediente&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-secondary btn-sm" onclick="closeModal('modal-ingrediente')"&gt;<span class="s2">✕</span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-body"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="form-grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Descripción *&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="text" id="i-descripcion" placeholder="Nombre del ingrediente"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Tipo&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;select id="i-tipo"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;Proteína&lt;/option&gt;&lt;option&gt;Vegetal&lt;/option&gt;&lt;option&gt;Lácteo&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;Cereal/Grano&lt;/option&gt;&lt;option&gt;Condimento&lt;/option&gt;&lt;option&gt;Salsa&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;Fruta&lt;/option&gt;&lt;option&gt;Bebida/Alcohol&lt;/option&gt;&lt;option&gt;Empaque&lt;/option&gt;&lt;option&gt;Otro&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Unidad de Medida&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;select id="i-unidad"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;kg&lt;/option&gt;&lt;option&gt;g&lt;/option&gt;&lt;option&gt;L&lt;/option&gt;&lt;option&gt;ml&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;option&gt;pza&lt;/option&gt;&lt;option&gt;manojo&lt;/option&gt;&lt;option&gt;lata&lt;/option&gt;&lt;option&gt;bolsa&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Precio por Unidad ($)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="number" id="i-precio" step="0.01" placeholder="0.00"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Rendimiento (%)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="number" id="i-rendimiento" value="100" min="1" max="100"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Presentación&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="text" id="i-presentacion" placeholder="Ej: Bolsa 1kg"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="form-group full"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;label&gt;Proveedor&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;input type="text" id="i-proveedor" placeholder="Nombre del proveedor"/&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-footer"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-secondary" onclick="closeModal('modal-ingrediente')"&gt;Cancelar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn btn-primary" onclick="saveIngrediente()"&gt;Guardar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- MODAL VER RECETA --&gt;</p>
+<p class="p1">&lt;div class="modal-overlay hidden" id="modal-ver-receta"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="modal" style="max-width:700px"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span style="font-weight:600;font-size:1rem" id="ver-receta-nombre"&gt;Detalle&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="flex gap-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-secondary btn-sm" id="btn-editar-receta"&gt;Editar&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button class="btn btn-secondary btn-sm" onclick="closeModal('modal-ver-receta')"&gt;<span class="s2">✕</span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-body" id="ver-receta-body"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">var editingRecetaId = null;</p>
+<p class="p1">var editingIngredienteId = null;</p>
+<p class="p1">var currentTab = 0;</p>
+<p class="p2"><br></p>
+<p class="p1">var CATEGORIAS_COLORS = {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Rollos': '#6c63ff',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Salsas y Aderezos': '#ff6584',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Arroces': '#ffd166',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Fondos y Bases': '#06d6a0',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Postres': '#f9a8d4',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Bebidas': '#74b9ff',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Platos Fuertes': '#fd79a8',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Kushiage': '#a29bfe',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Sopas': '#55efc4',</p>
+<p class="p1"><span class="Apple-converted-space">  </span>'Otro': '#b2bec3'</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">var ingredientes = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:1,<span class="Apple-converted-space">  </span>descripcion:'Arroz para sushi',<span class="Apple-converted-space">    </span>tipo:'Cereal/Grano',<span class="Apple-converted-space">    </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:35,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 5kg', <span class="Apple-converted-space">      </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:2,<span class="Apple-converted-space">  </span>descripcion:'Agua',<span class="Apple-converted-space">                </span>tipo:'Otro',<span class="Apple-converted-space">            </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:0.5, rendimiento:100, presentacion:'Garrafón', <span class="Apple-converted-space">        </span>proveedor:'Local'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:3,<span class="Apple-converted-space">  </span>descripcion:'Vinagre', <span class="Apple-converted-space">            </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:28,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 1L', <span class="Apple-converted-space">      </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:4,<span class="Apple-converted-space">  </span>descripcion:'Azúcar Zulka',<span class="Apple-converted-space">        </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:22,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 2kg',<span class="Apple-converted-space">        </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:5,<span class="Apple-converted-space">  </span>descripcion:'Sal la fina', <span class="Apple-converted-space">        </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:8, <span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 1kg',<span class="Apple-converted-space">        </span>proveedor:'Local'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:6,<span class="Apple-converted-space">  </span>descripcion:'Cebolla morada',<span class="Apple-converted-space">      </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:18,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:7,<span class="Apple-converted-space">  </span>descripcion:'Chile serrano', <span class="Apple-converted-space">      </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:35,<span class="Apple-converted-space">  </span>rendimiento:90,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:8,<span class="Apple-converted-space">  </span>descripcion:'Surimi',<span class="Apple-converted-space">              </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:120, rendimiento:100, presentacion:'Paquete 500g', <span class="Apple-converted-space">    </span>proveedor:'Mariscos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:9,<span class="Apple-converted-space">  </span>descripcion:'Queso crema', <span class="Apple-converted-space">        </span>tipo:'Lácteo',<span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:95,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Barra 190g', <span class="Apple-converted-space">      </span>proveedor:'Lácteos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:10, descripcion:'Mayonesa',<span class="Apple-converted-space">            </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:45,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bote 1kg', <span class="Apple-converted-space">        </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:11, descripcion:'Crema ácida', <span class="Apple-converted-space">        </span>tipo:'Lácteo',<span class="Apple-converted-space">          </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:38,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bote 900ml', <span class="Apple-converted-space">      </span>proveedor:'Lácteos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:12, descripcion:'Chile chipotle',<span class="Apple-converted-space">      </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:55,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Lata 215g',<span class="Apple-converted-space">        </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:13, descripcion:'Salsa de soja', <span class="Apple-converted-space">      </span>tipo:'Salsa', <span class="Apple-converted-space">          </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:65,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 1L', <span class="Apple-converted-space">      </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:14, descripcion:'Jugo de limón', <span class="Apple-converted-space">      </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:30,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:15, descripcion:'Mirin', <span class="Apple-converted-space">              </span>tipo:'Bebida/Alcohol',<span class="Apple-converted-space">  </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:85,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 1L', <span class="Apple-converted-space">      </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:16, descripcion:'Sake',<span class="Apple-converted-space">                </span>tipo:'Bebida/Alcohol',<span class="Apple-converted-space">  </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:120, rendimiento:100, presentacion:'Botella 750ml',<span class="Apple-converted-space">    </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:17, descripcion:'Azúcar',<span class="Apple-converted-space">              </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:22,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 1kg',<span class="Apple-converted-space">        </span>proveedor:'Local'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:18, descripcion:'Fécula de maíz',<span class="Apple-converted-space">      </span>tipo:'Cereal/Grano',<span class="Apple-converted-space">    </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:18,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 500g', <span class="Apple-converted-space">      </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:19, descripcion:'Jengibre',<span class="Apple-converted-space">            </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:75,<span class="Apple-converted-space">  </span>rendimiento:80,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:20, descripcion:'Ajo', <span class="Apple-converted-space">                </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:55,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Cabeza', <span class="Apple-converted-space">          </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:21, descripcion:'Jitomate',<span class="Apple-converted-space">            </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:20,<span class="Apple-converted-space">  </span>rendimiento:90,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:22, descripcion:'Aceite',<span class="Apple-converted-space">              </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:35,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 1L', <span class="Apple-converted-space">      </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:23, descripcion:'Jarabe natural',<span class="Apple-converted-space">      </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:40,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 1L', <span class="Apple-converted-space">      </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:24, descripcion:'Cebolla blanca',<span class="Apple-converted-space">      </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:15,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:25, descripcion:'Cilantro',<span class="Apple-converted-space">            </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:25,<span class="Apple-converted-space">  </span>rendimiento:75,<span class="Apple-converted-space">  </span>presentacion:'Manojo', <span class="Apple-converted-space">          </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:26, descripcion:'Chile habanero',<span class="Apple-converted-space">      </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:80,<span class="Apple-converted-space">  </span>rendimiento:90,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:27, descripcion:'Pimienta',<span class="Apple-converted-space">            </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:180, rendimiento:100, presentacion:'Frasco 100g',<span class="Apple-converted-space">      </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:28, descripcion:'Alga nori', <span class="Apple-converted-space">          </span>tipo:'Otro',<span class="Apple-converted-space">            </span>unidad:'pza', precio:4.5, rendimiento:100, presentacion:'Paquete 10 hojas', proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:29, descripcion:'Aguacate',<span class="Apple-converted-space">            </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:45,<span class="Apple-converted-space">  </span>rendimiento:70,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:30, descripcion:'Camarón empanizado',<span class="Apple-converted-space">  </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:185, rendimiento:100, presentacion:'Bolsa 1kg',<span class="Apple-converted-space">        </span>proveedor:'Mariscos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:31, descripcion:'Ajonjolí',<span class="Apple-converted-space">            </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:65,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 250g', <span class="Apple-converted-space">      </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:32, descripcion:'Kanikama',<span class="Apple-converted-space">            </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:110, rendimiento:100, presentacion:'Paquete 500g', <span class="Apple-converted-space">    </span>proveedor:'Mariscos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:33, descripcion:'Mango', <span class="Apple-converted-space">              </span>tipo:'Fruta', <span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:30,<span class="Apple-converted-space">  </span>rendimiento:75,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:34, descripcion:'Salsa tamarindo', <span class="Apple-converted-space">    </span>tipo:'Salsa', <span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:45,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bote 500g',<span class="Apple-converted-space">        </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:35, descripcion:'Salsa anguila', <span class="Apple-converted-space">      </span>tipo:'Salsa', <span class="Apple-converted-space">          </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:95,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 500ml',<span class="Apple-converted-space">    </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:36, descripcion:'Empaque', <span class="Apple-converted-space">            </span>tipo:'Empaque', <span class="Apple-converted-space">        </span>unidad:'pza', precio:3.5, rendimiento:100, presentacion:'Caja', <span class="Apple-converted-space">            </span>proveedor:'Empaques MX'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:37, descripcion:'Queso manchego',<span class="Apple-converted-space">      </span>tipo:'Lácteo',<span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:145, rendimiento:100, presentacion:'Pieza 400g', <span class="Apple-converted-space">      </span>proveedor:'Lácteos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:38, descripcion:'Arrachera', <span class="Apple-converted-space">          </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:280, rendimiento:80,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Carnicería'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:39, descripcion:'Aderezo chipotle',<span class="Apple-converted-space">    </span>tipo:'Salsa', <span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:55,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bote', <span class="Apple-converted-space">            </span>proveedor:'Elaboración propia'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:40, descripcion:'Aderezo tampico', <span class="Apple-converted-space">    </span>tipo:'Salsa', <span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:65,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bote', <span class="Apple-converted-space">            </span>proveedor:'Elaboración propia'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:41, descripcion:'Kiwi',<span class="Apple-converted-space">                </span>tipo:'Fruta', <span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:55,<span class="Apple-converted-space">  </span>rendimiento:80,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:42, descripcion:'Fresa', <span class="Apple-converted-space">              </span>tipo:'Fruta', <span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:40,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Caja 500g',<span class="Apple-converted-space">        </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:43, descripcion:'Pollo', <span class="Apple-converted-space">              </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:95,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Carnicería'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:44, descripcion:'Pepino',<span class="Apple-converted-space">              </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:18,<span class="Apple-converted-space">  </span>rendimiento:90,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:45, descripcion:'Masago',<span class="Apple-converted-space">              </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:380, rendimiento:100, presentacion:'Tarro 500g', <span class="Apple-converted-space">      </span>proveedor:'Mariscos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:46, descripcion:'Salmón',<span class="Apple-converted-space">              </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:350, rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Filete', <span class="Apple-converted-space">          </span>proveedor:'Mariscos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:47, descripcion:'Muslo de pollo',<span class="Apple-converted-space">      </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:85,<span class="Apple-converted-space">  </span>rendimiento:80,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Carnicería'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:48, descripcion:'Cebollín',<span class="Apple-converted-space">            </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:35,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Manojo', <span class="Apple-converted-space">          </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:49, descripcion:'Harina',<span class="Apple-converted-space">              </span>tipo:'Cereal/Grano',<span class="Apple-converted-space">    </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:15,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 1kg',<span class="Apple-converted-space">        </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:50, descripcion:'Levadura',<span class="Apple-converted-space">            </span>tipo:'Otro',<span class="Apple-converted-space">            </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:45,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Sobre 7g', <span class="Apple-converted-space">        </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:51, descripcion:'Leche', <span class="Apple-converted-space">              </span>tipo:'Lácteo',<span class="Apple-converted-space">          </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:22,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Caja 1L',<span class="Apple-converted-space">          </span>proveedor:'Lácteos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:52, descripcion:'Mantequilla', <span class="Apple-converted-space">        </span>tipo:'Lácteo',<span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:85,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Barra 90g',<span class="Apple-converted-space">        </span>proveedor:'Lácteos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:53, descripcion:'Huevo', <span class="Apple-converted-space">              </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'pza', precio:4, <span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Cartón 30pz',<span class="Apple-converted-space">      </span>proveedor:'Local'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:54, descripcion:'Crema de leche',<span class="Apple-converted-space">      </span>tipo:'Lácteo',<span class="Apple-converted-space">          </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:65,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Caja 1L',<span class="Apple-converted-space">          </span>proveedor:'Lácteos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:55, descripcion:'Matcha',<span class="Apple-converted-space">              </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:850, rendimiento:100, presentacion:'Lata 100g',<span class="Apple-converted-space">        </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:56, descripcion:'Grenetina', <span class="Apple-converted-space">          </span>tipo:'Otro',<span class="Apple-converted-space">            </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:120, rendimiento:100, presentacion:'Sobre 7g', <span class="Apple-converted-space">        </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:57, descripcion:'Vainilla',<span class="Apple-converted-space">            </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:180, rendimiento:100, presentacion:'Frasco 120ml', <span class="Apple-converted-space">    </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:58, descripcion:'Huesos de cerdo', <span class="Apple-converted-space">    </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:35,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Carnicería'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:59, descripcion:'Zanahoria', <span class="Apple-converted-space">          </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:12,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:60, descripcion:'Apio',<span class="Apple-converted-space">                </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:18,<span class="Apple-converted-space">  </span>rendimiento:80,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:61, descripcion:'Champiñón', <span class="Apple-converted-space">          </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:65,<span class="Apple-converted-space">  </span>rendimiento:90,<span class="Apple-converted-space">  </span>presentacion:'Charola 250g', <span class="Apple-converted-space">    </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:62, descripcion:'Calabaza',<span class="Apple-converted-space">            </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:14,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:63, descripcion:'Manzana verde', <span class="Apple-converted-space">      </span>tipo:'Fruta', <span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:28,<span class="Apple-converted-space">  </span>rendimiento:90,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:64, descripcion:'Palillos',<span class="Apple-converted-space">            </span>tipo:'Empaque', <span class="Apple-converted-space">        </span>unidad:'pza', precio:1.5, rendimiento:100, presentacion:'Caja 100pz', <span class="Apple-converted-space">      </span>proveedor:'Empaques MX'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:65, descripcion:'Plátano macho', <span class="Apple-converted-space">      </span>tipo:'Fruta', <span class="Apple-converted-space">          </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:16,<span class="Apple-converted-space">  </span>rendimiento:80,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:66, descripcion:'Camarón', <span class="Apple-converted-space">            </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:220, rendimiento:70,<span class="Apple-converted-space">  </span>presentacion:'kg', <span class="Apple-converted-space">              </span>proveedor:'Mariscos'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:67, descripcion:'Espinaca',<span class="Apple-converted-space">            </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:35,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Bolsa 300g', <span class="Apple-converted-space">      </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:68, descripcion:'Panceta', <span class="Apple-converted-space">            </span>tipo:'Proteína',<span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:145, rendimiento:90,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Carnicería'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:69, descripcion:'Bobas tapioca', <span class="Apple-converted-space">      </span>tipo:'Otro',<span class="Apple-converted-space">            </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:95,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 500g', <span class="Apple-converted-space">      </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:70, descripcion:'Calpis',<span class="Apple-converted-space">              </span>tipo:'Bebida/Alcohol',<span class="Apple-converted-space">  </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:120, rendimiento:100, presentacion:'Botella 1L', <span class="Apple-converted-space">      </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:71, descripcion:'Sirope de frutos',<span class="Apple-converted-space">    </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:55,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 1L', <span class="Apple-converted-space">      </span>proveedor:'Distribuidor General'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:72, descripcion:'Hielo', <span class="Apple-converted-space">              </span>tipo:'Otro',<span class="Apple-converted-space">            </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:5, <span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 5kg',<span class="Apple-converted-space">        </span>proveedor:'Local'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:73, descripcion:'Agua mineral',<span class="Apple-converted-space">        </span>tipo:'Otro',<span class="Apple-converted-space">            </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:12,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 600ml',<span class="Apple-converted-space">    </span>proveedor:'Local'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:74, descripcion:'Pimiento verde',<span class="Apple-converted-space">      </span>tipo:'Vegetal', <span class="Apple-converted-space">        </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:28,<span class="Apple-converted-space">  </span>rendimiento:85,<span class="Apple-converted-space">  </span>presentacion:'Pieza',<span class="Apple-converted-space">            </span>proveedor:'Mercado'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:75, descripcion:'Aceite de ajonjolí',<span class="Apple-converted-space">  </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:145, rendimiento:100, presentacion:'Botella 250ml',<span class="Apple-converted-space">    </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:76, descripcion:'Ajinomoto', <span class="Apple-converted-space">          </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'kg',<span class="Apple-converted-space">  </span>precio:65,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Bolsa 500g', <span class="Apple-converted-space">      </span>proveedor:'Proveedor Asiático'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:77, descripcion:'Vinagre para sushi',<span class="Apple-converted-space">  </span>tipo:'Condimento',<span class="Apple-converted-space">      </span>unidad:'L', <span class="Apple-converted-space">  </span>precio:55,<span class="Apple-converted-space">  </span>rendimiento:100, presentacion:'Botella 1L', <span class="Apple-converted-space">      </span>proveedor:'Proveedor Asiático'}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">var recetas = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:1, nombre:'Arroz Gohan', clasificacion:'Arroces', porciones:1, peso:1.15, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Lavar el arroz hasta que el agua salga clara. Cocinar con agua en proporción 1:1.15. Dejar reposar tapado 10 minutos.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Base para todos los platillos calientes.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:1,cantidad:1,unidad:'kg',merma:0},{ingredienteId:2,cantidad:1.15,unidad:'L',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:2, nombre:'Arroz Shari', clasificacion:'Arroces', porciones:1, peso:1.65, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Preparar arroz gohan. Mezclar con vinagre para sushi tibio. Abanicarlo mientras se mezcla para lograr brillo.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Base para todos los rollos. Usar tibio, nunca frío.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:1,cantidad:1,unidad:'kg',merma:0},{ingredienteId:2,cantidad:1.15,unidad:'L',merma:0},{ingredienteId:77,cantidad:0.5,unidad:'L',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:3, nombre:'Salsa Teriyaki', clasificacion:'Salsas y Aderezos', porciones:1, peso:1.13, imprevistos:10, margenVenta:250, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Mezclar soja, mirin y sake. Calentar con azúcar hasta disolver. Agregar fécula disuelta en agua fría. Cocinar hasta espesar.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Conservar refrigerado hasta 2 semanas.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:13,cantidad:0.45,unidad:'L',merma:0},{ingredienteId:15,cantidad:0.35,unidad:'L',merma:0},{ingredienteId:16,cantidad:0.15,unidad:'L',merma:0},{ingredienteId:17,cantidad:0.12,unidad:'kg',merma:0},{ingredienteId:18,cantidad:0.02,unidad:'kg',merma:0},{ingredienteId:2,cantidad:0.04,unidad:'L',merma:0},{ingredienteId:19,cantidad:0.015,unidad:'kg',merma:10},{ingredienteId:20,cantidad:0.02,unidad:'kg',merma:15}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:4, nombre:'Salsa Anguila', clasificacion:'Salsas y Aderezos', porciones:1, peso:1.0, imprevistos:10, margenVenta:250, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Mezclar todos los ingredientes. Calentar a fuego medio-bajo revolviendo constantemente hasta reducir a 2/3 del volumen original.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Cuidar que no se queme el azúcar.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:13,cantidad:0.3,unidad:'L',merma:0},{ingredienteId:15,cantidad:0.3,unidad:'L',merma:0},{ingredienteId:4,cantidad:0.3,unidad:'kg',merma:0},{ingredienteId:16,cantidad:0.1,unidad:'L',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:5, nombre:'Rollo Kani Kani', clasificacion:'Rollos', porciones:1, peso:0.28, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Extender arroz shari sobre alga nori. Agregar relleno. Enrollar con ayuda del tapete de bambú. Cortar en 8 piezas.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Servir inmediatamente. Decorar con salsa anguila.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:28,cantidad:0.5,unidad:'pza',merma:0},{ingredienteId:9,cantidad:0.025,unidad:'kg',merma:0},{ingredienteId:29,cantidad:0.03,unidad:'kg',merma:30},{ingredienteId:30,cantidad:0.03,unidad:'kg',merma:0},{ingredienteId:31,cantidad:0.002,unidad:'kg',merma:0},{ingredienteId:32,cantidad:0.02,unidad:'kg',merma:0},{ingredienteId:35,cantidad:0.01,unidad:'L',merma:0},{ingredienteId:36,cantidad:1,unidad:'pza',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:6, nombre:'Tropical Roll', clasificacion:'Rollos', porciones:1, peso:0.28, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Extender arroz shari. Colocar camarón, aguacate y surimi. Enrollar. Cubrir con mango en láminas y salsa tamarindo.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'El mango debe estar maduro pero firme.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:28,cantidad:0.5,unidad:'pza',merma:0},{ingredienteId:30,cantidad:0.025,unidad:'kg',merma:0},{ingredienteId:29,cantidad:0.02,unidad:'kg',merma:30},{ingredienteId:8,cantidad:0.025,unidad:'kg',merma:0},{ingredienteId:33,cantidad:0.02,unidad:'kg',merma:25},{ingredienteId:34,cantidad:0.01,unidad:'kg',merma:0},{ingredienteId:36,cantidad:1,unidad:'pza',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:7, nombre:'Tampico Roll', clasificacion:'Rollos', porciones:1, peso:0.28, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Armar rollo con arroz shari, camarón empanizado y queso crema. Cubrir con aderezo tampico y ajonjolí.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'El aderezo tampico debe aplicarse al momento de servir.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:28,cantidad:0.5,unidad:'pza',merma:0},{ingredienteId:30,cantidad:0.03,unidad:'kg',merma:0},{ingredienteId:9,cantidad:0.02,unidad:'kg',merma:0},{ingredienteId:29,cantidad:0.02,unidad:'kg',merma:30},{ingredienteId:40,cantidad:0.03,unidad:'kg',merma:0},{ingredienteId:31,cantidad:0.004,unidad:'kg',merma:0},{ingredienteId:36,cantidad:1,unidad:'pza',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:8, nombre:'California', clasificacion:'Rollos', porciones:1, peso:0.28, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Rollo invertido (uramaki). Arroz por fuera, alga por dentro. Rellenar con surimi, pepino y aguacate. Cubrir con ajonjolí y masago.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Clásico de la carta. Alto volumen de ventas.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:28,cantidad:0.5,unidad:'pza',merma:0},{ingredienteId:8,cantidad:0.025,unidad:'kg',merma:0},{ingredienteId:44,cantidad:0.03,unidad:'kg',merma:10},{ingredienteId:29,cantidad:0.02,unidad:'kg',merma:30},{ingredienteId:31,cantidad:0.01,unidad:'kg',merma:0},{ingredienteId:36,cantidad:1,unidad:'pza',merma:0},{ingredienteId:45,cantidad:0.005,unidad:'kg',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:9, nombre:'Harami Roru', clasificacion:'Rollos', porciones:1, peso:0.28, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Armar rollo con arrachera marinada, queso crema y aguacate. Cubrir con queso manchego y aderezo chipotle. Gratinar brevemente.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Arrachera debe marinarse mínimo 2 horas.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:28,cantidad:0.5,unidad:'pza',merma:0},{ingredienteId:38,cantidad:0.03,unidad:'kg',merma:20},{ingredienteId:9,cantidad:0.02,unidad:'kg',merma:0},{ingredienteId:29,cantidad:0.02,unidad:'kg',merma:30},{ingredienteId:37,cantidad:0.02,unidad:'kg',merma:0},{ingredienteId:7,cantidad:0.005,unidad:'kg',merma:10},{ingredienteId:39,cantidad:0.01,unidad:'kg',merma:0},{ingredienteId:36,cantidad:1,unidad:'pza',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:10, nombre:'Tepanyaki', clasificacion:'Platos Fuertes', porciones:1, peso:0.3, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Marinar arrachera con soja, ajo y jengibre. Cocinar en plancha muy caliente con verduras. Servir sobre arroz gohan.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'La plancha debe estar a temperatura máxima para el sellado.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:38,cantidad:0.1,unidad:'kg',merma:20},{ingredienteId:6,cantidad:0.037,unidad:'kg',merma:15},{ingredienteId:74,cantidad:0.03,unidad:'kg',merma:15},{ingredienteId:61,cantidad:0.03,unidad:'kg',merma:10},{ingredienteId:13,cantidad:0.015,unidad:'L',merma:0},{ingredienteId:75,cantidad:0.004,unidad:'L',merma:0},{ingredienteId:19,cantidad:0.002,unidad:'kg',merma:10},{ingredienteId:20,cantidad:0.002,unidad:'kg',merma:15},{ingredienteId:17,cantidad:0.002,unidad:'kg',merma:0},{ingredienteId:5,cantidad:0.003,unidad:'kg',merma:0},{ingredienteId:27,cantidad:0.002,unidad:'kg',merma:0},{ingredienteId:36,cantidad:1,unidad:'pza',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:11, nombre:'Tarta Vasca Matcha', clasificacion:'Postres', porciones:8, peso:0.8, imprevistos:10, margenVenta:280, elaborado:'Chef Pastelero', revision:'2024-02-01',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Batir queso crema con azúcar. Agregar huevos uno a uno. Incorporar crema, harina, fécula y matcha. Hornear a 220°C por 25 min.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Debe quedar quemada por fuera y cremosa por dentro. Enfriar completamente antes de servir.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:9,cantidad:0.7,unidad:'kg',merma:0},{ingredienteId:4,cantidad:0.22,unidad:'kg',merma:0},{ingredienteId:57,cantidad:0.005,unidad:'L',merma:0},{ingredienteId:53,cantidad:4,unidad:'pza',merma:0},{ingredienteId:54,cantidad:0.3,unidad:'L',merma:0},{ingredienteId:49,cantidad:0.015,unidad:'kg',merma:0},{ingredienteId:18,cantidad:0.015,unidad:'kg',merma:0},{ingredienteId:51,cantidad:0.13,unidad:'L',merma:0},{ingredienteId:55,cantidad:0.012,unidad:'kg',merma:0},{ingredienteId:56,cantidad:0.012,unidad:'kg',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:12, nombre:'Calpis de Sabores', clasificacion:'Bebidas', porciones:1, peso:0.5, imprevistos:5, margenVenta:400, elaborado:'Barista', revision:'2024-01-20',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Colocar bobas en el vaso. Agregar hielo. Mezclar calpis con sirope y verter sobre el hielo. Completar con agua mineral.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Servir inmediatamente. Las bobas deben estar frescas (máx 4h de preparadas).',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:69,cantidad:0.09,unidad:'kg',merma:0},{ingredienteId:70,cantidad:0.06,unidad:'L',merma:0},{ingredienteId:71,cantidad:0.06,unidad:'L',merma:0},{ingredienteId:72,cantidad:0.07,unidad:'kg',merma:0},{ingredienteId:73,cantidad:0.245,unidad:'L',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:13, nombre:'Kushiage Camarón', clasificacion:'Kushiage', porciones:1, peso:0.06, imprevistos:10, margenVenta:350, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Ensartar camarón y queso crema en palillo. Pasar por harina, huevo y pan molido. Freír a 180°C hasta dorar.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'Servir con salsa kushiage.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:64,cantidad:3,unidad:'pza',merma:0},{ingredienteId:66,cantidad:0.03,unidad:'kg',merma:30},{ingredienteId:9,cantidad:0.01,unidad:'kg',merma:0},{ingredienteId:36,cantidad:1,unidad:'pza',merma:0}]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:14, nombre:'Mar y Tierra', clasificacion:'Rollos', porciones:1, peso:0.28, imprevistos:10, margenVenta:300, elaborado:'Chef Principal', revision:'2024-01-15',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>procedimiento:'Armar rollo combinando muslo de pollo, arrachera y camarón empanizado. Cubrir con aderezo chipotle, cebollín y ajonjolí.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>notas:'El pollo y la arrachera deben estar pre-cocidos.',</p>
+<p class="p1"><span class="Apple-converted-space">   </span>ingredientes:[{ingredienteId:28,cantidad:0.5,unidad:'pza',merma:0},{ingredienteId:47,cantidad:0.02,unidad:'kg',merma:20},{ingredienteId:38,cantidad:0.02,unidad:'kg',merma:20},{ingredienteId:30,cantidad:0.02,unidad:'kg',merma:0},{ingredienteId:39,cantidad:0.01,unidad:'kg',merma:0},{ingredienteId:48,cantidad:0.005,unidad:'kg',merma:15},{ingredienteId:31,cantidad:0.003,unidad:'kg',merma:0},{ingredienteId:36,cantidad:1,unidad:'pza',merma:0}]}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">var nextIngId = ingredientes.length + 1;</p>
+<p class="p1">var nextRecId = recetas.length + 1;</p>
+<p class="p2"><br></p>
+<p class="p1">function getIngrediente(id) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; ingredientes.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (ingredientes[i].id === id) return ingredientes[i];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return null;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function calcCostoReceta(receta) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var total = 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; receta.ingredientes.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ri = receta.ingredientes[i];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ing = getIngrediente(ri.ingredienteId);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!ing) continue;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var mermaFactor = 1 + (ri.merma || 0) / 100;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>total += ing.precio * ri.cantidad * mermaFactor;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var imp = total * ((receta.imprevistos || 10) / 100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var costoTotal = total + imp;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var costoPorcion = costoTotal / (receta.porciones || 1);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var precioVenta = costoPorcion * (1 + (receta.margenVenta || 300) / 100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return { total: total, imprevistos: imp, costoTotal: costoTotal, costoPorcion: costoPorcion, precioVenta: precioVenta, margen: receta.margenVenta || 300 };</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function fmt(n) { return '$' + (n || 0).toFixed(2); }</p>
+<p class="p1">function fmtPct(n) { return (n || 0).toFixed(0) + '%'; }</p>
+<p class="p2"><br></p>
+<p class="p1">function getCategoriaColor(cat) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return CATEGORIAS_COLORS[cat] || '#b2bec3';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function getBadgeClass(cat) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var map = {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Rollos': 'badge-purple',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Salsas y Aderezos': 'badge-red',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Arroces': 'badge-orange',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Fondos y Bases': 'badge-green',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Postres': 'badge-red',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Bebidas': 'badge-blue',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Platos Fuertes': 'badge-red',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Kushiage': 'badge-purple',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Sopas': 'badge-green',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'Otro': 'badge-blue'</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return map[cat] || 'badge-purple';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function navigate(page, el) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('page-' + page).classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (el) el.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var titles = { dashboard:'Dashboard', recetas:'Recetas', ingredientes:'Ingredientes', costos:'Análisis de Costos', fichas:'Fichas Técnicas' };</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('topbar-title').textContent = titles[page] || page;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (page === 'dashboard') renderDashboard();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (page === 'recetas') renderRecetasTable();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (page === 'ingredientes') renderIngredientesTable();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (page === 'costos') renderCostos();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (page === 'fichas') renderFichasSelect();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderDashboard() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('stat-recetas').textContent = recetas.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('stat-ingredientes').textContent = ingredientes.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var costos = recetas.map(function(r) { return calcCostoReceta(r); });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var promCosto = costos.reduce(function(a, c) { return a + c.costoPorcion; }, 0) / recetas.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var promMargen = costos.reduce(function(a, c) { return a + c.margen; }, 0) / recetas.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('stat-costo-prom').textContent = fmt(promCosto);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('stat-margen').textContent = fmtPct(promMargen);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>var tbody = document.getElementById('dash-recetas-tbody');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var recentas = recetas.slice(-5).reverse();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; recentas.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var r = recentas[i];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var c = calcCostoReceta(r);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += '&lt;tr&gt;&lt;td&gt;&lt;strong&gt;' + r.nombre + '&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="badge ' + getBadgeClass(r.clasificacion) + '"&gt;' + r.clasificacion + '&lt;/span&gt;&lt;/td&gt;&lt;td&gt;' + fmt(c.costoPorcion) + '&lt;/td&gt;&lt;td&gt;&lt;span class="text-success"&gt;' + fmtPct(c.margen) + '&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tbody.innerHTML = html;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ingCosts = ingredientes.slice().sort(function(a, b) { return b.precio - a.precio; }).slice(0, 8);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var maxCost = ingCosts[0] ? ingCosts[0].precio : 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ingHtml = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var j = 0; j &lt; ingCosts.length; j++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ing = ingCosts[j];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var pct = ((ing.precio / maxCost) * 100).toFixed(0);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ingHtml += '&lt;div style="margin-bottom:12px"&gt;&lt;div class="flex justify-between" style="margin-bottom:4px"&gt;&lt;span class="text-sm"&gt;' + ing.descripcion + '&lt;/span&gt;&lt;span class="text-sm font-bold"&gt;' + fmt(ing.precio) + '/' + ing.unidad + '&lt;/span&gt;&lt;/div&gt;&lt;div class="progress-bar"&gt;&lt;div class="progress-fill" style="width:' + pct + '%;background:var(--accent)"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('top-ingredientes-list').innerHTML = ingHtml;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>var cats = {};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var k = 0; k &lt; recetas.length; k++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var rc = recetas[k];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cats[rc.clasificacion] = (cats[rc.clasificacion] || 0) + 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var total = recetas.length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var catEntries = Object.keys(cats).map(function(key) { return [key, cats[key]]; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>catEntries.sort(function(a, b) { return b[1] - a[1]; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var catHtml = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var m = 0; m &lt; catEntries.length; m++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var cat = catEntries[m][0];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var count = catEntries[m][1];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var pctCat = ((count / total) * 100).toFixed(0);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>catHtml += '&lt;div style="margin-bottom:14px"&gt;&lt;div class="flex justify-between" style="margin-bottom:5px"&gt;&lt;span class="text-sm"&gt;' + cat + '&lt;/span&gt;&lt;span class="text-sm text-muted"&gt;' + count + ' receta' + (count &gt; 1 ? 's' : '') + ' · ' + pctCat + '%&lt;/span&gt;&lt;/div&gt;&lt;div class="progress-bar" style="height:8px"&gt;&lt;div class="progress-fill" style="width:' + pctCat + '%;background:' + getCategoriaColor(cat) + '"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('categoria-bars').innerHTML = catHtml;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderRecetasTable() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var catFilter = document.getElementById('filter-categoria');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var cats = [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; recetas.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (cats.indexOf(recetas[i].clasificacion) === -1) cats.push(recetas[i].clasificacion);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>cats.sort();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var currentCat = catFilter.value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>catFilter.innerHTML = '&lt;option value=""&gt;Todas las categorías&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var c = 0; c &lt; cats.length; c++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>catFilter.innerHTML += '&lt;option value="' + cats[c] + '"' + (cats[c] === currentCat ? ' selected' : '') + '&gt;' + cats[c] + '&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>var list = recetas.slice();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (currentCat) list = list.filter(function(r) { return r.clasificacion === currentCat; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var sort = document.getElementById('filter-sort').value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (sort === 'costo') list.sort(function(a, b) { return calcCostoReceta(a).costoPorcion - calcCostoReceta(b).costoPorcion; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else if (sort === 'margen') list.sort(function(a, b) { return b.margenVenta - a.margenVenta; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>else list.sort(function(a, b) { return a.nombre.localeCompare(b.nombre); });</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>var tbody = document.getElementById('recetas-tbody');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!list.length) { tbody.innerHTML = '&lt;tr&gt;&lt;td colspan="9" style="text-align:center;padding:40px;color:var(--text2)"&gt;No hay recetas&lt;/td&gt;&lt;/tr&gt;'; return; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var r = 0; r &lt; list.length; r++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var rec = list[r];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var co = calcCostoReceta(rec);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += '&lt;tr&gt;&lt;td&gt;&lt;strong&gt;' + rec.nombre + '&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="badge ' + getBadgeClass(rec.clasificacion) + '"&gt;' + rec.clasificacion + '&lt;/span&gt;&lt;/td&gt;&lt;td&gt;' + rec.porciones + '&lt;/td&gt;&lt;td&gt;' + rec.ingredientes.length + '&lt;/td&gt;&lt;td&gt;' + fmt(co.costoTotal) + '&lt;/td&gt;&lt;td&gt;' + fmt(co.costoPorcion) + '&lt;/td&gt;&lt;td&gt;&lt;span class="text-warning"&gt;' + fmt(co.precioVenta) + '&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="text-success"&gt;' + fmtPct(co.margen) + '&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;div class="flex gap-2"&gt;&lt;button class="btn btn-secondary btn-sm" onclick="verReceta(' + rec.id + ')"&gt;Ver&lt;/button&gt;&lt;button class="btn btn-secondary btn-sm" onclick="editReceta(' + rec.id + ')"&gt;<span class="s1">✏️</span>&lt;/button&gt;&lt;button class="btn btn-danger btn-sm" onclick="deleteReceta(' + rec.id + ')"&gt;<span class="s1">🗑</span>&lt;/button&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tbody.innerHTML = html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function verReceta(id) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var r = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; recetas.length; i++) { if (recetas[i].id === id) { r = recetas[i]; break; } }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!r) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var c = calcCostoReceta(r);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ver-receta-nombre').textContent = r.nombre;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('btn-editar-receta').onclick = function() { closeModal('modal-ver-receta'); editReceta(id); };</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ingsHtml = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var j = 0; j &lt; r.ingredientes.length; j++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ri = r.ingredientes[j];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ing = getIngrediente(ri.ingredienteId);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!ing) continue;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var mf = 1 + (ri.merma || 0) / 100;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var costoIng = ing.precio * ri.cantidad * mf;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ingsHtml += '&lt;tr&gt;&lt;td&gt;' + ing.descripcion + '&lt;/td&gt;&lt;td&gt;&lt;span class="badge badge-blue"&gt;' + ing.tipo + '&lt;/span&gt;&lt;/td&gt;&lt;td&gt;' + ri.cantidad + '&lt;/td&gt;&lt;td&gt;' + ri.unidad + '&lt;/td&gt;&lt;td&gt;' + (ri.merma || 0) + '%&lt;/td&gt;&lt;td&gt;' + fmt(ing.precio) + '&lt;/td&gt;&lt;td&gt;' + fmt(costoIng) + '&lt;/td&gt;&lt;/tr&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ver-receta-body').innerHTML =</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;div class="ficha-meta" style="margin-bottom:16px"&gt;&lt;div class="ficha-meta-item"&gt;&lt;span&gt;Clasificación&lt;/span&gt;&lt;span&gt;&lt;span class="badge ' + getBadgeClass(r.clasificacion) + '"&gt;' + r.clasificacion + '&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class="ficha-meta-item"&gt;&lt;span&gt;Porciones&lt;/span&gt;&lt;span&gt;' + r.porciones + '&lt;/span&gt;&lt;/div&gt;&lt;div class="ficha-meta-item"&gt;&lt;span&gt;Elaborado por&lt;/span&gt;&lt;span&gt;' + (r.elaborado || '—') + '&lt;/span&gt;&lt;/div&gt;&lt;div class="ficha-meta-item"&gt;&lt;span&gt;Revisión&lt;/span&gt;&lt;span&gt;' + (r.revision || '—') + '&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;div class="cost-highlight" style="margin-bottom:16px"&gt;&lt;div class="cost-item"&gt;&lt;span&gt;Costo MP&lt;/span&gt;&lt;span&gt;' + fmt(c.total) + '&lt;/span&gt;&lt;/div&gt;&lt;div class="cost-item"&gt;&lt;span&gt;Imprevistos&lt;/span&gt;&lt;span&gt;' + fmt(c.imprevistos) + '&lt;/span&gt;&lt;/div&gt;&lt;div class="cost-item"&gt;&lt;span&gt;Costo/Porción&lt;/span&gt;&lt;span&gt;' + fmt(c.costoPorcion) + '&lt;/span&gt;&lt;/div&gt;&lt;div class="cost-item"&gt;&lt;span&gt;Precio Venta Sug.&lt;/span&gt;&lt;span&gt;' + fmt(c.precioVenta) + '&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;div class="table-wrap" style="margin-bottom:16px"&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Ingrediente&lt;/th&gt;&lt;th&gt;Tipo&lt;/th&gt;&lt;th&gt;Cantidad&lt;/th&gt;&lt;th&gt;Unidad&lt;/th&gt;&lt;th&gt;Merma&lt;/th&gt;&lt;th&gt;P.Unit&lt;/th&gt;&lt;th&gt;Costo&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;' + ingsHtml + '&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>(r.procedimiento ? '&lt;div style="margin-bottom:12px"&gt;&lt;strong&gt;Procedimiento:&lt;/strong&gt;&lt;p class="text-muted" style="margin-top:6px;line-height:1.6"&gt;' + r.procedimiento + '&lt;/p&gt;&lt;/div&gt;' : '') +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>(r.notas ? '&lt;div&gt;&lt;strong&gt;Notas:&lt;/strong&gt;&lt;p class="text-muted" style="margin-top:6px;line-height:1.6"&gt;' + r.notas + '&lt;/p&gt;&lt;/div&gt;' : '');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>openModal('modal-ver-receta');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function deleteReceta(id) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!confirm('¿Eliminar esta receta?')) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>recetas = recetas.filter(function(r) { return r.id !== id; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderRecetasTable();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderDashboard();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderIngredientesTable() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var tipoFilter = document.getElementById('filter-tipo-ing');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var tipos = [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; ingredientes.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (tipos.indexOf(ingredientes[i].tipo) === -1) tipos.push(ingredientes[i].tipo);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tipos.sort();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var currentTipo = tipoFilter.value;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>tipoFilter.innerHTML = '&lt;option value=""&gt;Todos los tipos&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var t = 0; t &lt; tipos.length; t++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tipoFilter.innerHTML += '&lt;option value="' + tipos[t] + '"' + (tipos[t] === currentTipo ? ' selected' : '') + '&gt;' + tipos[t] + '&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var list = ingredientes.slice();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (currentTipo) list = list.filter(function(i) { return i.tipo === currentTipo; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>list.sort(function(a, b) { return a.descripcion.localeCompare(b.descripcion); });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var html = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var r = 0; r &lt; list.length; r++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ing = list[r];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var rndColor = ing.rendimiento &gt; 80 ? 'var(--success)' : ing.rendimiento &gt; 50 ? 'var(--warning)' : 'var(--danger)';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += '&lt;tr&gt;&lt;td class="text-muted"&gt;' + (r + 1) + '&lt;/td&gt;&lt;td&gt;&lt;strong&gt;' + ing.descripcion + '&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="badge badge-blue"&gt;' + ing.tipo + '&lt;/span&gt;&lt;/td&gt;&lt;td&gt;' + ing.unidad + '&lt;/td&gt;&lt;td&gt;&lt;strong&gt;' + fmt(ing.precio) + '&lt;/strong&gt;&lt;/td&gt;&lt;td&gt;&lt;div class="flex items-center gap-2"&gt;&lt;div class="progress-bar" style="width:60px"&gt;&lt;div class="progress-fill" style="width:' + ing.rendimiento + '%;background:' + rndColor + '"&gt;&lt;/div&gt;&lt;/div&gt;&lt;span class="text-sm"&gt;' + ing.rendimiento + '%&lt;/span&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="text-muted"&gt;' + (ing.presentacion || '—') + '&lt;/td&gt;&lt;td class="text-muted"&gt;' + (ing.proveedor || '—') + '&lt;/td&gt;&lt;td&gt;&lt;div class="flex gap-2"&gt;&lt;button class="btn btn-secondary btn-sm" onclick="editIngrediente(' + ing.id + ')"&gt;<span class="s1">✏️</span>&lt;/button&gt;&lt;button class="btn btn-danger btn-sm" onclick="deleteIngrediente(' + ing.id + ')"&gt;<span class="s1">🗑</span>&lt;/button&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ingredientes-tbody').innerHTML = html;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function deleteIngrediente(id) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!confirm('¿Eliminar este ingrediente?')) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ingredientes = ingredientes.filter(function(i) { return i.id !== id; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderIngredientesTable();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderCostos() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var sel = document.getElementById('sim-receta');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>sel.innerHTML = '&lt;option value=""&gt;-- Elige una receta --&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; recetas.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.innerHTML += '&lt;option value="' + recetas[i].id + '"&gt;' + recetas[i].nombre + '&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ranked = recetas.slice().map(function(r) { return { r: r, c: calcCostoReceta(r) }; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>ranked.sort(function(a, b) { return b.c.costoPorcion - a.c.costoPorcion; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var maxCosto = ranked[0] ? ranked[0].c.costoPorcion : 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var rankHtml = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var j = 0; j &lt; ranked.length; j++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var item = ranked[j];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var pct = ((item.c.costoPorcion / maxCosto) * 100).toFixed(0);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rankHtml += '&lt;div style="margin-bottom:12px"&gt;&lt;div class="flex justify-between" style="margin-bottom:4px"&gt;&lt;span class="text-sm"&gt;' + item.r.nombre + '&lt;/span&gt;&lt;span class="text-sm font-bold"&gt;' + fmt(item.c.costoPorcion) + '/prc&lt;/span&gt;&lt;/div&gt;&lt;div class="progress-bar"&gt;&lt;div class="progress-fill" style="width:' + pct + '%;background:' + getCategoriaColor(item.r.clasificacion) + '"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ranking-costos').innerHTML = rankHtml;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>var cats = {};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var k = 0; k &lt; recetas.length; k++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var rc = recetas[k];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var co = calcCostoReceta(rc);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!cats[rc.clasificacion]) cats[rc.clasificacion] = { total: 0, count: 0 };</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cats[rc.clasificacion].total += co.costoPorcion;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cats[rc.clasificacion].count++;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var catData = Object.keys(cats).map(function(key) { return { cat: key, avg: cats[key].total / cats[key].count, count: cats[key].count }; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>catData.sort(function(a, b) { return b.avg - a.avg; });</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var maxAvg = catData[0] ? catData[0].avg : 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var catHtml = '&lt;div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px"&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var m = 0; m &lt; catData.length; m++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var d = catData[m];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var pctD = ((d.avg / maxAvg) * 100).toFixed(0);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>catHtml += '&lt;div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px"&gt;&lt;div style="font-size:0.75rem;color:var(--text2);margin-bottom:4px"&gt;' + d.cat + '&lt;/div&gt;&lt;div style="font-size:1.2rem;font-weight:700;color:' + getCategoriaColor(d.cat) + '"&gt;' + fmt(d.avg) + '&lt;/div&gt;&lt;div style="font-size:0.72rem;color:var(--text2)"&gt;Promedio/porción · ' + d.count + ' receta' + (d.count &gt; 1 ? 's' : '') + '&lt;/div&gt;&lt;div class="progress-bar" style="margin-top:8px"&gt;&lt;div class="progress-fill" style="width:' + pctD + '%;background:' + getCategoriaColor(d.cat) + '"&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>catHtml += '&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('comparativa-categorias').innerHTML = catHtml;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function simularPrecio() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var id = parseInt(document.getElementById('sim-receta').value);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var margen = parseFloat(document.getElementById('sim-margen').value) || 300;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var imp = parseFloat(document.getElementById('sim-imprevistos').value) || 10;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var res = document.getElementById('sim-resultado');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!id) { res.style.display = 'none'; return; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var r = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; recetas.length; i++) { if (recetas[i].id === id) { r = recetas[i]; break; } }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!r) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var costoMP = 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var j = 0; j &lt; r.ingredientes.length; j++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ri = r.ingredientes[j];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ing = getIngrediente(ri.ingredienteId);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!ing) continue;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>costoMP += ing.precio * ri.cantidad * (1 + (ri.merma || 0) / 100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>costoMP = costoMP / (r.porciones || 1);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var impMonto = costoMP * (imp / 100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var costoReal = costoMP + impMonto;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var precioVenta = costoReal * (1 + margen / 100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('sim-costo-mp').textContent = fmt(costoMP);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('sim-costo-imp').textContent = fmt(impMonto);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('sim-costo-real').textContent = fmt(costoReal);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('sim-precio-venta').textContent = fmt(precioVenta);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>res.style.display = 'block';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderFichasSelect() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var sel = document.getElementById('ficha-select');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>sel.innerHTML = '&lt;option value=""&gt;-- Seleccionar Receta --&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; recetas.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>sel.innerHTML += '&lt;option value="' + recetas[i].id + '"&gt;' + recetas[i].nombre + '&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function renderFicha() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var id = parseInt(document.getElementById('ficha-select').value);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var container = document.getElementById('ficha-container');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!id) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>container.innerHTML = '&lt;div class="empty-state"&gt;&lt;svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"&gt;&lt;path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/&gt;&lt;polyline points="14 2 14 8 20 8"/&gt;&lt;/svg&gt;&lt;p&gt;Selecciona una receta para ver su ficha técnica&lt;/p&gt;&lt;/div&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var r = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; recetas.length; i++) { if (recetas[i].id === id) { r = recetas[i]; break; } }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!r) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var c = calcCostoReceta(r);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ingsRows = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var j = 0; j &lt; r.ingredientes.length; j++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ri = r.ingredientes[j];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ing = getIngrediente(ri.ingredienteId);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (!ing) continue;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var mf = 1 + (ri.merma || 0) / 100;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var costoNeto = ing.precio * ri.cantidad * mf;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ingsRows += '&lt;tr&gt;&lt;td&gt;' + ing.descripcion + '&lt;/td&gt;&lt;td&gt;' + ing.tipo + '&lt;/td&gt;&lt;td&gt;' + ri.cantidad + '&lt;/td&gt;&lt;td&gt;' + ri.unidad + '&lt;/td&gt;&lt;td&gt;' + (ing.presentacion || '—') + '&lt;/td&gt;&lt;td&gt;' + (ri.merma || 0) + '%&lt;/td&gt;&lt;td&gt;' + fmt(ing.precio) + '&lt;/td&gt;&lt;td&gt;' + fmt(ing.precio * ri.cantidad) + '&lt;/td&gt;&lt;td&gt;' + fmt(costoNeto) + '&lt;/td&gt;&lt;/tr&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>container.innerHTML =</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;div class="ficha-header"&gt;&lt;div class="flex justify-between items-center"&gt;&lt;div&gt;&lt;div style="font-size:0.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px"&gt;Ficha Técnica de Estandarización&lt;/div&gt;&lt;div style="font-size:1.5rem;font-weight:700;margin-bottom:4px"&gt;' + r.nombre + '&lt;/div&gt;&lt;span class="badge ' + getBadgeClass(r.clasificacion) + '"&gt;' + r.clasificacion + '&lt;/span&gt;&lt;/div&gt;&lt;div style="text-align:right"&gt;&lt;div style="font-size:0.72rem;color:var(--text2)"&gt;GDI-33&lt;/div&gt;&lt;div style="font-size:0.85rem;margin-top:4px"&gt;Rev: ' + (r.revision || '—') + '&lt;/div&gt;&lt;div style="font-size:0.85rem"&gt;Por: ' + (r.elaborado || '—') + '&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="ficha-meta"&gt;&lt;div class="ficha-meta-item"&gt;&lt;span&gt;Porciones&lt;/span&gt;&lt;span&gt;' + r.porciones + '&lt;/span&gt;&lt;/div&gt;&lt;div class="ficha-meta-item"&gt;&lt;span&gt;Peso Salida&lt;/span&gt;&lt;span&gt;' + (r.peso || '—') + ' kg&lt;/span&gt;&lt;/div&gt;&lt;div class="ficha-meta-item"&gt;&lt;span&gt;Imprevistos&lt;/span&gt;&lt;span&gt;' + (r.imprevistos || 10) + '%&lt;/span&gt;&lt;/div&gt;&lt;div class="ficha-meta-item"&gt;&lt;span&gt;Margen Venta&lt;/span&gt;&lt;span&gt;' + (r.margenVenta || 300) + '%&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class="cost-highlight"&gt;&lt;div class="cost-item"&gt;&lt;span&gt;Inversión MP&lt;/span&gt;&lt;span&gt;' + fmt(c.total) + '&lt;/span&gt;&lt;/div&gt;&lt;div class="cost-item"&gt;&lt;span&gt;+ Imprevistos&lt;/span&gt;&lt;span&gt;' + fmt(c.imprevistos) + '&lt;/span&gt;&lt;/div&gt;&lt;div class="cost-item"&gt;&lt;span&gt;Costo Total&lt;/span&gt;&lt;span&gt;' + fmt(c.costoTotal) + '&lt;/span&gt;&lt;/div&gt;&lt;div class="cost-item"&gt;&lt;span&gt;Costo/Porción&lt;/span&gt;&lt;span&gt;' + fmt(c.costoPorcion) + '&lt;/span&gt;&lt;/div&gt;&lt;div class="cost-item"&gt;&lt;span&gt;Precio Venta Sug.&lt;/span&gt;&lt;span style="font-size:1.3rem"&gt;' + fmt(c.precioVenta) + '&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;div class="card" style="margin-bottom:16px"&gt;&lt;div class="card-header"&gt;&lt;span class="card-title"&gt;Ingredientes y Costos&lt;/span&gt;&lt;/div&gt;&lt;div class="table-wrap"&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Ingrediente&lt;/th&gt;&lt;th&gt;Tipo&lt;/th&gt;&lt;th&gt;Cantidad&lt;/th&gt;&lt;th&gt;Unidad&lt;/th&gt;&lt;th&gt;Presentación&lt;/th&gt;&lt;th&gt;Merma&lt;/th&gt;&lt;th&gt;P. Unitario&lt;/th&gt;&lt;th&gt;P. Bruto&lt;/th&gt;&lt;th&gt;Costo Neto&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;' + ingsRows + '&lt;/tbody&gt;&lt;tfoot&gt;&lt;tr style="background:rgba(108,99,255,0.08)"&gt;&lt;td colspan="8" style="text-align:right;font-weight:700;padding:12px 14px"&gt;Inversión Total:&lt;/td&gt;&lt;td style="font-weight:700;color:var(--success)"&gt;' + fmt(c.total) + '&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;&lt;/table&gt;&lt;/div&gt;&lt;/div&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>(r.procedimiento ? '&lt;div class="card" style="margin-bottom:16px"&gt;&lt;div class="card-header"&gt;&lt;span class="card-title"&gt;Procedimiento&lt;/span&gt;&lt;/div&gt;&lt;p style="line-height:1.8;color:var(--text2)"&gt;' + r.procedimiento + '&lt;/p&gt;&lt;/div&gt;' : '') +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>(r.notas ? '&lt;div class="card"&gt;&lt;div class="card-header"&gt;&lt;span class="card-title"&gt;Notas&lt;/span&gt;&lt;/div&gt;&lt;p style="line-height:1.8;color:var(--text2)"&gt;' + r.notas + '&lt;/p&gt;&lt;/div&gt;' : '');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function openNewRecetaModal() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>editingRecetaId = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-receta-title').textContent = 'Nueva Receta';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-nombre').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-clasificacion').value = 'Rollos';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-porciones').value = 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-peso').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-imprevistos').value = 10;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-margen-venta').value = 300;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-elaborado').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-revision').value = new Date().toISOString().split('T')[0];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-procedimiento').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-notas').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ingredientes-list').innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>switchTab(0);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>addIngredienteRow(null);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>openModal('modal-receta');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function editReceta(id) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var r = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; recetas.length; i++) { if (recetas[i].id === id) { r = recetas[i]; break; } }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!r) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>editingRecetaId = id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-receta-title').textContent = 'Editar Receta';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-nombre').value = r.nombre;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-clasificacion').value = r.clasificacion;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-porciones').value = r.porciones;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-peso').value = r.peso || '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-imprevistos').value = r.imprevistos || 10;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-margen-venta').value = r.margenVenta || 300;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-elaborado').value = r.elaborado || '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-revision').value = r.revision || '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-procedimiento').value = r.procedimiento || '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('r-notas').value = r.notas || '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ingredientes-list').innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var j = 0; j &lt; r.ingredientes.length; j++) { addIngredienteRow(r.ingredientes[j]); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>switchTab(0);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>openModal('modal-receta');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function addIngredienteRow(data) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var div = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>div.className = 'ing-row';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ingOptions = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; ingredientes.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ing = ingredientes[i];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ingOptions += '&lt;option value="' + ing.id + '"' + (data &amp;&amp; data.ingredienteId === ing.id ? ' selected' : '') + '&gt;' + ing.descripcion + '&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var unidades = ['kg','g','L','ml','pza','manojo'];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var unidadOptions = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var u = 0; u &lt; unidades.length; u++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>unidadOptions += '&lt;option' + (data &amp;&amp; data.unidad === unidades[u] ? ' selected' : '') + '&gt;' + unidades[u] + '&lt;/option&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>div.innerHTML = '&lt;select class="ing-select" onchange="recalcModal()"&gt;' + ingOptions + '&lt;/select&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;input type="number" class="ing-cant" value="' + (data ? data.cantidad : 0.1) + '" step="0.001" min="0" oninput="recalcModal()"/&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;select class="ing-unidad"&gt;' + unidadOptions + '&lt;/select&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;input type="number" class="ing-merma" value="' + (data ? (data.merma || 0) : 0) + '" min="0" max="100" oninput="recalcModal()"/&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;span class="ing-costo text-success text-sm"&gt;$0.00&lt;/span&gt;' +</p>
+<p class="p1"><span class="Apple-converted-space">    </span>'&lt;button class="btn btn-danger btn-sm" onclick="this.parentElement.remove();recalcModal()"&gt;<span class="s2">✕</span>&lt;/button&gt;';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('ingredientes-list').appendChild(div);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>recalcModal();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function recalcModal() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var rows = document.querySelectorAll('#ingredientes-list .ing-row');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var total = 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; rows.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var row = rows[i];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ingId = parseInt(row.querySelector('.ing-select').value);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var cant = parseFloat(row.querySelector('.ing-cant').value) || 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var merma = parseFloat(row.querySelector('.ing-merma').value) || 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var ing = getIngrediente(ingId);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (ing) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>var costo = ing.precio * cant * (1 + merma / 100);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>total += costo;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>row.querySelector('.ing-costo').textContent = fmt(costo);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var porciones = parseInt(document.getElementById('r-porciones').value) || 1;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var margen = parseFloat(document.getElementById('r-margen-venta').value) || 300;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var imp = parseFloat(document.getElementById('r-imprevistos').value) || 10;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var costoTotal = total * (1 + imp / 100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var costoPorcion = costoTotal / porciones;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var precioVenta = costoPorcion * (1 + margen / 100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-costo-total').textContent = fmt(total);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-costo-porcion').textContent = fmt(costoPorcion);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-precio-venta').textContent = fmt(precioVenta);</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function saveReceta() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var nombre = document.getElementById('r-nombre').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!nombre) { alert('El nombre de la receta es obligatorio.'); return; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var rows = document.querySelectorAll('#ingredientes-list .ing-row');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ings = [];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; rows.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>var row = rows[i];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ings.push({</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ingredienteId: parseInt(row.querySelector('.ing-select').value),</p>
+<p class="p1"><span class="Apple-converted-space">      </span>cantidad: parseFloat(row.querySelector('.ing-cant').value) || 0,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>unidad: row.querySelector('.ing-unidad').value,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>merma: parseFloat(row.querySelector('.ing-merma').value) || 0</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var receta = {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>nombre: nombre,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>clasificacion: document.getElementById('r-clasificacion').value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>porciones: parseInt(document.getElementById('r-porciones').value) || 1,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>peso: parseFloat(document.getElementById('r-peso').value) || 0,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>imprevistos: parseFloat(document.getElementById('r-imprevistos').value) || 10,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margenVenta: parseFloat(document.getElementById('r-margen-venta').value) || 300,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>elaborado: document.getElementById('r-elaborado').value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>revision: document.getElementById('r-revision').value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>procedimiento: document.getElementById('r-procedimiento').value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>notas: document.getElementById('r-notas').value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ingredientes: ings</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (editingRecetaId) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>for (var j = 0; j &lt; recetas.length; j++) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (recetas[j].id === editingRecetaId) { recetas[j] = Object.assign({ id: editingRecetaId }, receta); break; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>receta.id = nextRecId++;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>recetas.push(receta);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>closeModal('modal-receta');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderRecetasTable();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderDashboard();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function openNewIngredienteModal() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>editingIngredienteId = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-ing-title').textContent = 'Nuevo Ingrediente';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-descripcion').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-precio').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-rendimiento').value = 100;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-presentacion').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-proveedor').value = '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>openModal('modal-ingrediente');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function editIngrediente(id) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ing = null;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt; ingredientes.length; i++) { if (ingredientes[i].id === id) { ing = ingredientes[i]; break; } }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!ing) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>editingIngredienteId = id;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('modal-ing-title').textContent = 'Editar Ingrediente';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-descripcion').value = ing.descripcion;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-tipo').value = ing.tipo;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-unidad').value = ing.unidad;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-precio').value = ing.precio;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-rendimiento').value = ing.rendimiento;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-presentacion').value = ing.presentacion || '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById('i-proveedor').value = ing.proveedor || '';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>openModal('modal-ingrediente');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function saveIngrediente() {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var desc = document.getElementById('i-descripcion').value.trim();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!desc) { alert('La descripción es obligatoria.'); return; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var ing = {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>descripcion: desc,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tipo: document.getElementById('i-tipo').value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>unidad: document.getElementById('i-unidad').value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>precio: parseFloat(document.getElementById('i-precio').value) || 0,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>rendimiento: parseFloat(document.getElementById('i-rendimiento').value) || 100,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>presentacion: document.getElementById('i-presentacion').value,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>proveedor: document.getElementById('i-proveedor').value</p>
+<p class="p1"><span class="Apple-converted-space">  </span>};</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (editingIngredienteId) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>for (var i = 0; i &lt; ingredientes.length; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if (ingredientes[i].id === editingIngredienteId) { ingredientes[i] = Object.assign({ id: editingIngredienteId }, ing); break; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ing.id = nextIngId++;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>ingredientes.push(ing);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>closeModal('modal-ingrediente');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>renderIngredientesTable();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function switchTab(n) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>currentTab = n;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var i = 0; i &lt;= 2; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('tab-' + i).style.display = i === n ? 'block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>var tabs = document.querySelectorAll('.tabs .tab');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for (var j = 0; j &lt; tabs.length; j++) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tabs[j].classList.toggle('active', j === n);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (n === 1) recalcModal();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function globalSearch(q) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if (!q || q.length &lt; 2) return;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>navigate('recetas', document.getElementById('nav-recetas'));</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function openModal(id) { document.getElementById(id).classList.remove('hidden'); }</p>
+<p class="p1">function closeModal(id) { document.getElementById(id).classList.add('hidden'); }</p>
+<p class="p2"><br></p>
+<p class="p1">document.querySelectorAll('.modal-overlay').forEach(function(overlay) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>overlay.addEventListener('click', function(e) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>if (e.target === overlay) overlay.classList.add('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>});</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">renderDashboard();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
